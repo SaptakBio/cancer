@@ -316,6 +316,17 @@ T(si,sj) = P(event e1 | si) * P(mutation e2 | si, e1) * P(sj | si, e1, e2)  wher
 
 And that should solve all my issue
 
+Important point:-
+Currently we are lumping diffrent types of damage into a single damage state. But in reality, there are different types of damage and each has diffrent effect on reproduction, death etc
+Consider the following example:-
+Let's say there are 2 types of treatment A and B. A causes damage to the cell membrane and B causes damage to the DNA. 
+Now if a cell has damage to the membrane the's it's probability to die immediately increases to almost 1. 
+But if a cell has damage to the DNA, it may die quickly or become senescent but it is not immediately fatal
+
+One way to fix it is to have a vector of damage states instead of a single damage state. But modeling it with markov will be really complex
+An easier way is to have a single damage state like usual. Since the transition probabilites depend on the type of treatment, the transition probabilites will already handle the change in death,reproduction and other probabilities without explicitly modeling the type
+But this has another issue. That is, even after the treatment is stopped, and the drug is washed off, some of the effects may linger. So the transition probabilites should also depend on a short history of the treatment
+
 TODO:When cell die, they release harmful chemicals that can affect the probabilities. Consider it in future 
 
 Cell to volume:-
